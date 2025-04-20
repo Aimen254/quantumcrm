@@ -1,0 +1,490 @@
+@extends('layout.app')
+
+@section('content')
+<div class="row">
+    <div class="col-xl-9 col-xxl-12">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-header border-0 flex-wrap">
+                                        <div class="revenue-date">
+                                            <span>Total Agents</span>
+                                            <h4 class="text-white">{{$totalContacts}}</h4>
+                                        </div>
+                                        <div class="avatar-list avatar-list-stacked me-2">
+                                            <img src="{{ asset('assets/images/contacts/pic555.jpg')}}"
+                                                class="avatar rounded-circle" alt="">
+                                            <img src="{{ asset('assets/images/contacts/pic666.jpg')}}"
+                                                class="avatar rounded-circle" alt="">
+                                            <span class="avatar rounded-circle">{{ $activeContacts }}+</span>
+                                        </div>
+
+                                    </div>
+                                    <div
+                                        class="card-body pb-0 custome-tooltip d-flex align-items-center">
+                                        <div id="chartBar" class="chartBar"></div>
+                                        <div>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="10" r="10" fill="white" />
+                                                <g clip-path="url(#clip0_3_443)">
+                                                    <path opacity="0.3"
+                                                        d="M13.0641 7.54535C13.3245 7.285 13.3245 6.86289 13.0641 6.60254C12.8038 6.34219 12.3817 6.34219 12.1213 6.60254L6.46445 12.2594C6.2041 12.5197 6.2041 12.9419 6.46445 13.2022C6.7248 13.4626 7.14691 13.4626 7.40726 13.2022L13.0641 7.54535Z"
+                                                        fill="black" />
+                                                    <path
+                                                        d="M7.40729 7.26921C7.0391 7.26921 6.74062 6.97073 6.74062 6.60254C6.74062 6.23435 7.0391 5.93587 7.40729 5.93587H13.0641C13.4211 5.93587 13.7147 6.21699 13.7302 6.57358L13.9659 11.9947C13.9819 12.3626 13.6966 12.6737 13.3288 12.6897C12.961 12.7057 12.6498 12.4205 12.6338 12.0526L12.4258 7.26921H7.40729Z"
+                                                        fill="black" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3_443">
+                                                        <rect width="16" height="16" fill="white"
+                                                            transform="matrix(-1 0 0 -1 18 18)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <span class="d-block font-w600">{{ $activePercent}}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-header border-0">
+                                        <div class="revenue-date">
+                                            <span class="text-black">Total Calls</span>
+                                            <h4 class="text-black">{{$totalCalls}}</h4>
+                                        </div>
+                                        <div class="avatar-list avatar-list-stacked me-2">
+                                            <span class="avatar rounded-circle">
+                                                <a href="#">
+                                                    <svg width="14" height="15" viewBox="0 0 14 15"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M5.83333 6.27083V1.60417C5.83333 0.959834 6.35567 0.4375 7 0.4375C7.64433 0.4375 8.16667 0.959834 8.16667 1.60417V6.27083H12.8333C13.4777 6.27083 14 6.79317 14 7.4375C14 8.08183 13.4777 8.60417 12.8333 8.60417H8.16667V13.2708C8.16667 13.9152 7.64433 14.4375 7 14.4375C6.35567 14.4375 5.83333 13.9152 5.83333 13.2708V8.60417H1.16667C0.522334 8.60417 0 8.08183 0 7.4375C0 6.79317 0.522334 6.27083 1.16667 6.27083H5.83333Z"
+                                                            fill="#222B40" />
+                                                    </svg>
+                                                </a>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div
+                                        class="card-body pb-0 custome-tooltip d-flex align-items-center">
+                                        <div id="expensesChart" class="chartBar"></div>
+                                        <div>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="10" r="10" fill="#222B40" />
+                                                <g clip-path="url(#clip0_3_473)">
+                                                    <path opacity="0.3"
+                                                        d="M13.0641 7.54535C13.3245 7.285 13.3245 6.86289 13.0641 6.60254C12.8038 6.34219 12.3817 6.34219 12.1213 6.60254L6.46446 12.2594C6.20411 12.5197 6.20411 12.9419 6.46446 13.2022C6.72481 13.4626 7.14692 13.4626 7.40727 13.2022L13.0641 7.54535Z"
+                                                        fill="white" />
+                                                    <path
+                                                        d="M7.40728 7.26921C7.03909 7.26921 6.74061 6.97073 6.74061 6.60254C6.74061 6.23435 7.03909 5.93587 7.40728 5.93587H13.0641C13.4211 5.93587 13.7147 6.21699 13.7302 6.57358L13.9659 11.9947C13.9819 12.3626 13.6966 12.6737 13.3288 12.6897C12.9609 12.7057 12.6498 12.4205 12.6338 12.0526L12.4258 7.26921H7.40728Z"
+                                                        fill="white" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3_473">
+                                                        <rect width="16" height="16" fill="white"
+                                                            transform="matrix(-1 0 0 -1 18 18)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <span class="d-block font-w600 text-black">{{$answeredPercent}}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body depostit-card">
+                                        <div
+                                            class="depostit-card-media d-flex justify-content-between style-1">
+                                            <div>
+                                                <h6>Answered Calls</h6>
+                                                <h3>{{$answeredCalls}}</h3>
+                                            </div>
+                                            <div class="icon-box bg-secondary">
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_3_566)">
+                                                        <path opacity="0.3" fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M8 3V3.5C8 4.32843 8.67157 5 9.5 5H14.5C15.3284 5 16 4.32843 16 3.5V3H18C19.1046 3 20 3.89543 20 5V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V5C4 3.89543 4.89543 3 6 3H8Z"
+                                                            fill="#222B40" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M10.875 15.75C10.6354 15.75 10.3958 15.6542 10.2042 15.4625L8.2875 13.5458C7.90417 13.1625 7.90417 12.5875 8.2875 12.2042C8.67083 11.8208 9.29375 11.8208 9.62917 12.2042L10.875 13.45L14.0375 10.2875C14.4208 9.90417 14.9958 9.90417 15.3792 10.2875C15.7625 10.6708 15.7625 11.2458 15.3792 11.6292L11.5458 15.4625C11.3542 15.6542 11.1146 15.75 10.875 15.75Z"
+                                                            fill="#222B40" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M11 2C11 1.44772 11.4477 1 12 1C12.5523 1 13 1.44772 13 2H14.5C14.7761 2 15 2.22386 15 2.5V3.5C15 3.77614 14.7761 4 14.5 4H9.5C9.22386 4 9 3.77614 9 3.5V2.5C9 2.22386 9.22386 2 9.5 2H11Z"
+                                                            fill="#222B40" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_3_566">
+                                                            <rect width="24" height="24" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $progress = ($totalCalls > 0) ? round(($answeredCalls / $totalCalls) * 100) : 0;
+                                        @endphp
+                                        <div class="progress-box mt-0">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-0">Complete Task</p>
+                                                <p class="mb-0">{{$answeredCalls}}/{{$totalCalls}}</p>
+                                            </div>
+                                            <div class="progress">
+                                               <div class="progress-bar bg-secondary" style="width: {{ $progress }}%; height:5px; border-radius:4px;" role="progressbar" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card same-card">
+                                    <div class="card-body depostit-card p-0">
+                                        <div
+                                            class="depostit-card-media d-flex justify-content-between pb-0">
+                                            <div>
+                                                <h6>Call Performance</h6>
+                                                <h3>{{$callPerformance }}%</h3>
+                                            </div>
+                                            <div class="icon-box bg-primary">
+                                                <svg width="12" height="20" viewBox="0 0 12 20"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M11.4642 13.7074C11.4759 12.1252 10.8504 10.8738 9.60279 9.99009C8.6392 9.30968 7.46984 8.95476 6.33882 8.6137C3.98274 7.89943 3.29927 7.52321 3.29927 6.3965C3.29927 5.14147 4.93028 4.69493 6.32655 4.69493C7.34341 4.69493 8.51331 5.01109 9.23985 5.47964L10.6802 3.24887C9.73069 2.6333 8.43112 2.21342 7.14783 2.0831V0H4.49076V2.22918C2.12884 2.74876 0.640949 4.29246 0.640949 6.3965C0.640949 7.87005 1.25327 9.03865 2.45745 9.86289C3.37331 10.4921 4.49028 10.83 5.56927 11.1572C7.88027 11.8557 8.81873 12.2813 8.80805 13.691L8.80799 13.7014C8.80799 14.8845 7.24005 15.3051 5.89676 15.3051C4.62786 15.3051 3.248 14.749 2.46582 13.9222L0.535522 15.7481C1.52607 16.7957 2.96523 17.5364 4.4907 17.8267V20.0001H7.14783V17.8735C9.7724 17.4978 11.4616 15.9177 11.4642 13.7074Z"
+                                                        fill="#fff" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div id="NewExperience"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="row">
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-header border-0 flex-wrap">
+                                        <div class="revenue-date">
+                                            <span>Active Agents</span>
+                                            <h4 class="text-white">{{$activeContacts}}</h4>
+                                        </div>
+                                        <div class="avatar-list avatar-list-stacked me-2">
+                                            <img src="{{ asset('assets/images/contacts/pic555.jpg')}}"
+                                                class="avatar rounded-circle" alt="">
+                                            <img src="{{ asset('assets/images/contacts/pic666.jpg')}}"
+                                                class="avatar rounded-circle" alt="">
+                                            <span class="avatar rounded-circle">{{ $activeContacts }}+</span>
+                                        </div>
+
+                                    </div>
+                                    <div
+                                        class="card-body pb-0 custome-tooltip d-flex align-items-center">
+                                        <div id="chartBar2" class="chartBar"></div>
+                                        <div>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="10" r="10" fill="white" />
+                                                <g clip-path="url(#clip0_3_443)">
+                                                    <path opacity="0.3"
+                                                        d="M13.0641 7.54535C13.3245 7.285 13.3245 6.86289 13.0641 6.60254C12.8038 6.34219 12.3817 6.34219 12.1213 6.60254L6.46445 12.2594C6.2041 12.5197 6.2041 12.9419 6.46445 13.2022C6.7248 13.4626 7.14691 13.4626 7.40726 13.2022L13.0641 7.54535Z"
+                                                        fill="black" />
+                                                    <path
+                                                        d="M7.40729 7.26921C7.0391 7.26921 6.74062 6.97073 6.74062 6.60254C6.74062 6.23435 7.0391 5.93587 7.40729 5.93587H13.0641C13.4211 5.93587 13.7147 6.21699 13.7302 6.57358L13.9659 11.9947C13.9819 12.3626 13.6966 12.6737 13.3288 12.6897C12.961 12.7057 12.6498 12.4205 12.6338 12.0526L12.4258 7.26921H7.40729Z"
+                                                        fill="black" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3_443">
+                                                        <rect width="16" height="16" fill="white"
+                                                            transform="matrix(-1 0 0 -1 18 18)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <span class="d-block font-w600">{{ $activePercent}}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-header border-0">
+                                        <div class="revenue-date">
+                                            <span class="text-black">Missed Calls</span>
+                                            <h4 class="text-black">{{$missedCalls}}</h4>
+                                        </div>
+                                        <div class="avatar-list avatar-list-stacked me-2">
+                                            <span class="avatar rounded-circle">
+                                                <a href="#">
+                                                    <svg width="14" height="15" viewBox="0 0 14 15"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M5.83333 6.27083V1.60417C5.83333 0.959834 6.35567 0.4375 7 0.4375C7.64433 0.4375 8.16667 0.959834 8.16667 1.60417V6.27083H12.8333C13.4777 6.27083 14 6.79317 14 7.4375C14 8.08183 13.4777 8.60417 12.8333 8.60417H8.16667V13.2708C8.16667 13.9152 7.64433 14.4375 7 14.4375C6.35567 14.4375 5.83333 13.9152 5.83333 13.2708V8.60417H1.16667C0.522334 8.60417 0 8.08183 0 7.4375C0 6.79317 0.522334 6.27083 1.16667 6.27083H5.83333Z"
+                                                            fill="#222B40" />
+                                                    </svg>
+                                                </a>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div
+                                        class="card-body pb-0 custome-tooltip d-flex align-items-center">
+                                        <div id="expensesChart2" class="chartBar"></div>
+                                        <div>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="10" r="10" fill="#222B40" />
+                                                <g clip-path="url(#clip0_3_473)">
+                                                    <path opacity="0.3"
+                                                        d="M13.0641 7.54535C13.3245 7.285 13.3245 6.86289 13.0641 6.60254C12.8038 6.34219 12.3817 6.34219 12.1213 6.60254L6.46446 12.2594C6.20411 12.5197 6.20411 12.9419 6.46446 13.2022C6.72481 13.4626 7.14692 13.4626 7.40727 13.2022L13.0641 7.54535Z"
+                                                        fill="white" />
+                                                    <path
+                                                        d="M7.40728 7.26921C7.03909 7.26921 6.74061 6.97073 6.74061 6.60254C6.74061 6.23435 7.03909 5.93587 7.40728 5.93587H13.0641C13.4211 5.93587 13.7147 6.21699 13.7302 6.57358L13.9659 11.9947C13.9819 12.3626 13.6966 12.6737 13.3288 12.6897C12.9609 12.7057 12.6498 12.4205 12.6338 12.0526L12.4258 7.26921H7.40728Z"
+                                                        fill="white" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3_473">
+                                                        <rect width="16" height="16" fill="white"
+                                                            transform="matrix(-1 0 0 -1 18 18)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <span class="d-block font-w600 text-black">{{$answeredPercent}}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body depostit-card">
+                                        <div
+                                            class="depostit-card-media d-flex justify-content-between style-1">
+                                            <div>
+                                                <h6>Escalated Calls</h6>
+                                                <h3>{{$escalatedCalls}}</h3>
+                                            </div>
+                                            <div class="icon-box bg-secondary">
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_3_566)">
+                                                        <path opacity="0.3" fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M8 3V3.5C8 4.32843 8.67157 5 9.5 5H14.5C15.3284 5 16 4.32843 16 3.5V3H18C19.1046 3 20 3.89543 20 5V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V5C4 3.89543 4.89543 3 6 3H8Z"
+                                                            fill="#222B40" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M10.875 15.75C10.6354 15.75 10.3958 15.6542 10.2042 15.4625L8.2875 13.5458C7.90417 13.1625 7.90417 12.5875 8.2875 12.2042C8.67083 11.8208 9.29375 11.8208 9.62917 12.2042L10.875 13.45L14.0375 10.2875C14.4208 9.90417 14.9958 9.90417 15.3792 10.2875C15.7625 10.6708 15.7625 11.2458 15.3792 11.6292L11.5458 15.4625C11.3542 15.6542 11.1146 15.75 10.875 15.75Z"
+                                                            fill="#222B40" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M11 2C11 1.44772 11.4477 1 12 1C12.5523 1 13 1.44772 13 2H14.5C14.7761 2 15 2.22386 15 2.5V3.5C15 3.77614 14.7761 4 14.5 4H9.5C9.22386 4 9 3.77614 9 3.5V2.5C9 2.22386 9.22386 2 9.5 2H11Z"
+                                                            fill="#222B40" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_3_566">
+                                                            <rect width="24" height="24" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $progress = ($totalCalls > 0) ? round(($escalatedCalls / $totalCalls) * 100) : 0;
+                                        @endphp
+                                        <div class="progress-box mt-0">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-0">Complete Task</p>
+                                                <p class="mb-0">{{$escalatedCalls}}/{{$totalCalls}}</p>
+                                            </div>
+                                            <div class="progress">
+                                               <div class="progress-bar bg-secondary" style="width: {{ $progress }}%; height:5px; border-radius:4px;" role="progressbar" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-sm-6">
+                           
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="card overflow-hidden">
+                            <div class="card-header border-0 pb-0 flex-wrap">
+                                <h4 class="heading mb-0">Calls Performance</h4>
+                                <ul class="nav nav-pills mix-chart-tab" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" data-series="week"
+                                            id="pills-week-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-week" type="button" role="tab"
+                                            aria-selected="true">Week</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" data-series="month"
+                                            id="pills-month-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-month" type="button" role="tab"
+                                            aria-selected="false">Month</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" data-series="year" id="pills-year-tab"
+                                            data-bs-toggle="pill" data-bs-target="#pills-year"
+                                            type="button" role="tab" aria-selected="false">Year</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" data-series="all" id="pills-all-tab"
+                                            data-bs-toggle="pill" data-bs-target="#pills-all"
+                                            type="button" role="tab" aria-selected="false">All</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body custome-tooltip p-0">
+                                <div id="overiewChart"></div>
+                                <div class="ttl-project">
+                                    <div class="pr-data">
+                                        <h5>{{$totalCalls}}</h5>
+                                        <span>Total Calls</span>
+                                    </div>
+                                    <div class="pr-data">
+                                        <h5 class="text-primary">{{$answeredCalls}}</h5>
+                                        <span>Answered Calls</span>
+                                    </div>
+                                    <div class="pr-data">
+                                        <h5>{{$missedCalls}}</h5>
+                                        <span>Missed Calls</span>
+                                    </div>
+                                    <div class="pr-data">
+                                        <h5 class="text-success">{{$escalatedCalls}}</h5>
+                                        <span>Escalated Callss</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-xxl-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive active-projects">
+                    <div class="tbl-caption">
+                        <h4 class="heading mb-0">Call List</h4>
+                    </div>
+                    <table id="projects-tbl" class="table">
+                        <thead>
+                            <tr>
+                                <th>Caller</th>
+                                <th>Receiver</th>
+                                <th>Call Type</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Started At</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($calls as $call)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('storage/' . ($call->caller->photo ?? 'assets/images/contacts/pic2.jpg')) }}" class="avatar avatar-lg rounded-circle" alt="">
+                                                <class="avatar avatar-md rounded-circle" alt="">
+                                            <p class="mb-0 ms-2">{{ $call->caller->name }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('storage/' . ($call->receiver->photo ?? 'assets/images/contacts/pic2.jpg')) }}" class="avatar avatar-lg rounded-circle" alt="">
+                                                <class="avatar avatar-md rounded-circle" alt="">
+                                            <p class="mb-0 ms-2">{{ $call->receiver->name }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span>{{$call->type}}</span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {{ \Carbon\Carbon::parse($call->started_at)->diffInSeconds($call->ended_at) }}s
+                                        </span>
+                                    </td>
+                                    <td class="pe-0">
+                                        @php
+                                            $statusClass = [
+                                                'missed' => 'danger',
+                                                'answered' => 'success',
+                                                'escalated' => 'warning'
+                                            ][$call->status] ?? 'secondary';
+                                        @endphp
+                                        <span class="badge badge-{{ $statusClass }} light border-0 text-capitalize">
+                                            {{ $call->status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                        {{ \Carbon\Carbon::parse($call->started_at)->format('d M Y, H:i') }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <div class="btn-link" data-bs-toggle="dropdown">
+                                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path d="M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0Zm7 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0Zm-14 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z"
+                                                        stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item" onclick="updateCallStatus({{ $call->id }}, 'answered')">Mark as Answered</button>
+                                                <button class="dropdown-item" onclick="updateCallStatus({{ $call->id }}, 'missed')">Mark as Missed</button>
+                                                <button class="dropdown-item" onclick="updateCallStatus({{ $call->id }}, 'escalated')">Mark as Escalated</button>
+                                                <!-- <button class="dropdown-item text-warning" onclick="fixPerformance({{ $call->id }})">Fix Performance</button> -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@endsection
+@push('script') 
+<script>
+    function updateCallStatus(callId, status) {
+        const url = "{{ route('calls.status', ':id') }}".replace(':id', callId);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ status })
+        }).then(res => res.json())
+          .then(data => {
+            if(data.success) {
+                location.reload(); // You could also dynamically update the row instead
+            } else {
+                alert('Failed to update status.');
+            }
+        });
+    }
+
+    function fixPerformance(callId) {
+        alert("Fixing performance for call ID: " + callId);
+        // You can add a modal trigger or another AJAX request here
+    }
+</script>
+@endpush
