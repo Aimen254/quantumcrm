@@ -9,7 +9,10 @@
                     <div class="col-xl-3 col-lg-6 col-sm-5 chat-border mobile-chat chat-left-area">
                         <div class="chat-p shaprate">
                             <div class="d-flex">
-                               <img src="{{ asset('storage/' . auth()->user()->photo) }}" class="avatar avatar-lg rounded-circle" alt="">
+                                @php
+                                    $image = auth()->user()->photo ?? 'photos/user.jpg';
+                                @endphp
+                               <img src="{{ asset('storage/' . $image) }}" class="avatar avatar-lg rounded-circle" alt="">
                                 <div class="ms-2">
                                 <h6 class="mb-0">{{ auth()->user()->name }}</h6>
                                 <span>{{ auth()->user()->getRoleNames()->first() ?? 'No role' }}</span>                                </div>
@@ -147,41 +150,7 @@
                                 <img src="images/chat/3.png" alt="">
                             </div>
                         </div>
-                        <div class="chat-meadia">
-                            <h4 class=" fs-16">Files</h4>
-                            <div class="file-list row dz-scroll">
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/google-docs1.png" alt="">
-                                    <h5>document.doc</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/play-button1.png" alt="">
-                                    <h5>document.doc</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/music-notes1.png" alt="">
-                                    <h5>document.doc</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/pdf.png" alt="">
-                                    <h5>Project 01</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/music-notes1.png" alt="">
-                                    <h5>document.doc</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                    <img src="images/chat/google-docs1.png" alt="">
-                                    <h5>document.doc</h5>
-                                    <span>3 Items December 27th, 2021 04:56 AM - 10.0 MB</span>
-                                </div>
-                            </div>
-                        </div>
+                      
                     </div>
                 </div>
             </div>

@@ -39,7 +39,7 @@
 <body>
 <div id="preloader">
     <div>
-        <img src="{{ asset('assets/images/pre.gif')}}" alt="">
+        <img src="{{ asset('assets/images/loader.gif')}}" alt="">
     </div>
 </div>
 <div id="main-wrapper">

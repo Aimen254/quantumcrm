@@ -673,16 +673,24 @@
 	                                <a class="nav-link" href="javascript:void(0);" role="button"
 	                                    data-bs-toggle="dropdown" aria-expanded="false">
 	                                    <div class="header-info2 d-flex align-items-center">
+										    @php
+												$image = auth()->user()->photo ?? 'photos/user.jpg';
+											@endphp
 	                                        <div class="header-media">
-											   <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="">
+											   <img src="{{ asset('storage/' . $image) }}" alt="">
 	                                        </div>
 	                                    </div>
 	                                </a>
 	                                <div class="dropdown-menu dropdown-menu-end">
 	                                    <div class="card border-0 mb-0">
 	                                        <div class="card-header py-2">
+												@php
+													$image = auth()->user()->photo ?? 'photos/user.jpg';
+												@endphp
+									
 	                                            <div class="products">
-	                                                <img src="{{ asset('storage/' . auth()->user()->photo) }}" class="avatar avatar-md" alt="">
+												   <img src="{{ asset('storage/photos/user.jpg') }}" class="avatar avatar-md" alt="">
+
 	                                                <div>
 	                                                    <h6>{{auth()->user()->name}}</h6>
 	                                                    <span>{{ auth()->user()->getRoleNames()->first() ?? 'No role' }}</span>

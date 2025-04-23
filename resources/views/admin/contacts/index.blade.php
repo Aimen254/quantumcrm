@@ -17,9 +17,15 @@
 
 <div class="row">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ route('contacts.create') }}"  class="btn btn-primary btn-sm ms-2">+ Add User</a>
+        <a href="{{ route('contacts.create') }}"  class="btn btn-primary btn-sm ms-2">+ Add Contact</a>
         <div class="d-flex align-items-center">
             <ul class="nav nav-pills mix-chart-tab user-m-tabe" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importContactsModal">
+                        Import Contacts
+                    </button>
+                </li>
+                @include('modal.import')
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" data-series="colm" id="pills-colm-tab" data-bs-toggle="pill" data-bs-target="#pills-colm" type="button" role="tab"  aria-selected="false">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24  24" version="1.1" class="svg-main-icon">
@@ -57,7 +63,10 @@
                             <div class="card-body">
                                 <div class="card-use-box">
                                     <div class="crd-bx-img">
-                                        <img src="{{ asset('storage/' . $contact->photo) }}" class="rounded-circle" alt="">
+                                        @php
+                                            $image = $contact->photo ?? 'photos/user.jpg';
+                                        @endphp
+                                        <img src="{{ asset('storage/' . $image) }}" class="rounded-circle img-fluid" alt="" style="max-width: 100px;">
                                         <div class="active"></div>
                                     </div>
                                     <div class="card__text">
@@ -117,7 +126,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="images/contacts/pic1.jpg" class="avatar rounded-circle" alt="">
+                                                <img src="{{ asset('storage/' . $image) }}" class="avatar rounded-circle" alt="">
                                                 <p class="mb-0 ms-2">{{$contact->name}}</p>	
                                             </div>
                                         </td>

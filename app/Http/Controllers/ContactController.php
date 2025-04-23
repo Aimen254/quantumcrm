@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ContactsImport;
 use App\Models\Call;
 use Illuminate\Http\Request;
 use App\Models\Contact;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactController extends Controller
 {
@@ -51,6 +53,8 @@ class ContactController extends Controller
             $photoPath = null;
             if ($request->hasFile('photo')) {
                 $photoPath = $request->file('photo')->store('photos', 'public');
+            }else{
+                $photoPath = 'photos/user.jpg';
             }
     
             $user = User::create([
@@ -181,5 +185,24 @@ class ContactController extends Controller
         $call->save();
 
         return response()->json(['success' => true]);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'contacts_file' => 'required|file|mimes:xlsx,xls',
+        ]);
+    
+        try {
+            Excel::import(new ContactsImport, $request->file('contacts_file'));
+            Log::info('Contacts import successful.');
+            return redirect()->back()->with('success', 'Contacts imported successfully!');
+        } catch (\Exception $e) {
+            Log::error('Contacts import failed: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+    
+            return redirect()->back()->with('error', 'There was an error importing contacts. Check logs for details.');
+        }
     }
 }

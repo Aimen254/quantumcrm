@@ -35,7 +35,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <input type="file" name="photo" id="formProfileImageInput">
+                        <input type="file" name="photo" class="d-non" id="formProfileImageInput">
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">First Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required>

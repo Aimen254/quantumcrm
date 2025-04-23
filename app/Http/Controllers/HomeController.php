@@ -10,6 +10,7 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Call;
+use App\Models\Contact;
 use Carbon\Carbon;
 use PDO;
 
@@ -17,21 +18,22 @@ class HomeController extends Controller
 {
     public function dashboard()
     {
-        $totalContacts = User::count();
-        $activeContacts = User::whereHas('contact', function ($q) {
-            $q->where('is_active', true);
+        $totalContacts = Contact::whereHas('user', function ($query) {
+            $query->where('owner_id', auth()->id());
         })->count();
+        
+        $activeContacts = Contact::where('is_active', true)
+            ->whereHas('user', function ($query) {
+                $query->where('owner_id', auth()->id());
+            })->count();
     
-        $totalCalls = Call::count();
-        $calls = Call::all();
-        $answeredCalls = Call::where('status', 'answered')->count();
-        $missedCalls = Call::where('status', 'missed')->count();
-        $escalatedCalls = Call::where('status', 'escalated')->count();
-    
-        // Satisfactory call: duration >= 30 seconds
+        $totalCalls = Call::where('caller_id', auth()->id())->count();
+        $calls = Call::where('caller_id', auth()->id())->get(); 
+        $answeredCalls = Call::where('status', 'answered')->where('caller_id', auth()->id())->count();
+        $missedCalls = Call::where('status', 'missed')->where('caller_id', auth()->id())->count();
+        $escalatedCalls = Call::where('status', 'escalated')->where('caller_id', auth()->id())->count();
         $satisfactoryThreshold = 30;
-    
-        // Aggregate call performance by time period
+
         $performanceData = [
             'week' => $this->getCallPerformanceData('week', $satisfactoryThreshold),
             'month' => $this->getCallPerformanceData('month', $satisfactoryThreshold),
@@ -39,7 +41,7 @@ class HomeController extends Controller
             'all' => $this->getCallPerformanceData('all', $satisfactoryThreshold),
         ];
         $satisfactoryThreshold = 30;
-        $satisfactoryCalls = Call::where('status', 'answered')
+        $satisfactoryCalls = Call::where('status', 'answered')->where('caller_id', auth()->id())
         ->whereNotNull('started_at')
         ->whereNotNull('ended_at')
         ->get()
@@ -58,7 +60,7 @@ class HomeController extends Controller
             'missedCalls' => $missedCalls,
             'escalatedCalls' => $escalatedCalls,
             'totalContacts' => $totalContacts,
-            'activeContacts' => $activeContacts,
+            'activeContacts' => $activeContacts, // Now an integer, not a collection
             'activePercent' => $totalContacts > 0 ? round(($activeContacts / $totalContacts) * 100) : 0,
             'performanceChartData' => $performanceData,
             'callPerformance'      => $callPerformancePercent,
@@ -133,6 +135,7 @@ class HomeController extends Controller
                 SUM(CASE WHEN status = 'answered' THEN 1 ELSE 0 END) as answered_calls,
                 SUM(CASE WHEN status = 'answered' AND TIMESTAMPDIFF(SECOND, started_at, ended_at) >= ? THEN 1 ELSE 0 END) as satisfactory_calls
             ")
+            ->where('caller_id', auth()->id())
             ->groupBy('label');
 
         switch ($range) {
