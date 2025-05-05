@@ -28,6 +28,7 @@
                 <ul class="nav">
                     <li class="nav-item"><a href="#home" class="nav-link text-white">Home</a></li>
                     <li class="nav-item"><a href="#pricing" class="nav-link text-white">Register</a></li>
+                    <li class="nav-item"><a href="{{route('login')}}" class="nav-link text-white">Login</a></li>
                 </ul>
             </nav>
         </div>
