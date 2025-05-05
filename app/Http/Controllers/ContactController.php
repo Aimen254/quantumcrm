@@ -38,15 +38,14 @@ class ContactController extends Controller
             $validated = $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
-                'specialty' => 'nullable|string',
-                'gender' => 'nullable|in:Male,Female,Other',
-                'birth' => 'nullable|date',
-                'phone' => 'nullable|string',
+                'gender' => 'required|in:Male,Female,Other', // make required
+                'birth' => 'required|date', // make required
+                'phone' => 'required|string', // make required
                 'email' => 'required|email|unique:users,email',
                 'country_id' => 'required|exists:countries,id',
                 'city_id' => 'required|exists:cities,id',
                 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+            ]);            
     
             DB::beginTransaction();
     
@@ -94,7 +93,7 @@ class ContactController extends Controller
 
     public function edit($id)
     {
-        $data['user']  = User::find($id);
+        $data['user'] = User::with('contact')->findOrFail($id);
         $data['countries'] = Country::with('cities')->get();
         return view('admin.contacts.edit', $data);
     }
@@ -106,7 +105,6 @@ class ContactController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'specialty' => 'nullable|string',
             'gender' => 'nullable|in:Male,Female,Other',
             'birth' => 'nullable|date',
             'phone' => 'nullable|string',

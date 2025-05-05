@@ -42,7 +42,9 @@
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">First Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="first_name" value="{{ old('first_name', $user->contact->first_name) }}" required>
-                            @error('first_name')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Last Name <span class="text-danger">*</span></label>
@@ -50,37 +52,41 @@
                             @error('last_name')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Specialty</label>
-                            <input type="text" class="form-control" name="specialty" value="{{ old('specialty', $user->contact->specialty) }}">
-                            @error('specialty')<small class="text-danger">{{ $message }}</small>@enderror
-                        </div>
-                        <div class="col-sm-6 m-b30">
-                            <label class="form-label">Gender</label>
-                            <select class="default-select form-control" name="gender">
+                            <label class="form-label">Gender<span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="gender" required>
                                 <option value="">Please select</option>
                                 <option value="Male" {{ old('gender', $user->contact->gender) == 'Male' ? 'selected' : '' }}>Male</option>
                                 <option value="Female" {{ old('gender', $user->contact->gender) == 'Female' ? 'selected' : '' }}>Female</option>
                                 <option value="Other" {{ old('gender', $user->contact->gender) == 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
-                            @error('gender')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Birth</label>
+                            <label class="form-label">Birth<span class="text-danger">*</span></label>
                             <div class="input-hasicon mb-xl-0 mb-3">
-                                <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth', $user->contact->birth) }}">
+                                <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth', $user->contact->birth) }}" required>
                                 <div class="icon"><i class="far fa-calendar"></i></div>
                             </div>
-                            @error('birth')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label d-block">Phone <span class="text-danger">*</span></label>
-                            <input type="tel" id="phone" class="form-control" name="phone" value="{{ old('phone', $user->contact->phone) }}">
-                            @error('phone')<small class="text-danger">{{ $message }}</small>@enderror
+                            <input type="tel" id="phone" class="form-control" name="phone" value="{{ old('phone', $user->contact->phone) }}" required>
+                            <small id="phoneError" class="text-danger d-none">Please enter a valid Pakistani phone number.</small>
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}" required>
-                            @error('email')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         @php
                         $selectedCountry = old('country_id', $user->contact->country);
@@ -89,8 +95,8 @@
                         @endphp
 
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Country</label>
-                            <select class="default-select form-control" name="country_id" id="countrySelect">
+                            <label class="form-label">Country<span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="country_id" id="countrySelect" required>
                                 <option value="">Select country</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country->id }}" {{ $selectedCountry == $country->id ? 'selected' : '' }}>
@@ -98,12 +104,14 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @error('country_id')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
 
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">City</label>
-                            <select class="default-select form-control" name="city_id" id="citySelect">
+                            <label class="form-label">City<span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="city_id" id="citySelect" required>
                                 <option value="">Please select</option>
                                 @foreach($cities as $city)
                                 <option value="{{ $city->id }}" {{ $selectedCity == $city->id ? 'selected' : '' }}>
@@ -111,7 +119,9 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @error('city_id')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
 
                     </div>
@@ -123,6 +133,16 @@
         </div>
     </div>
 </div>
+@php
+// Fix the country-city map structure
+$countryCityMap = [];
+foreach ($countries as $country) {
+    $countryCityMap[$country->id] = $country->cities->mapWithKeys(function($city) {
+        return [$city->id => $city->name];
+    })->all();
+}
+@endphp
+
 @endsection
 
 @push('style')
@@ -162,37 +182,70 @@ document.addEventListener('DOMContentLoaded', function () {
             formInput.files = dataTransfer.files;
         }
     });
-
-    // Country-City Dynamic Dropdown
+    const countryCityMap = @json($countryCityMap);
     const countrySelect = document.getElementById('countrySelect');
     const citySelect = document.getElementById('citySelect');
-
-    const countryCityMap = @json($countries->mapWithKeys(function($country) {
-        return [$country->id => $country->cities->mapWithKeys(fn($city) => [$city->id => $city->name])];
-    }));
-
-    countrySelect.addEventListener('change', function () {
-        const countryId = this.value;
-        const cities = countryCityMap[countryId] || {};
-
+    const oldCityId = "{{ old('city_id', $user->contact->city_id) }}";
+    if (!countrySelect || !citySelect) {
+        console.error('Required select elements not found!');
+        return;
+    }
+    function loadCities(countryId) {
+        console.log('Loading cities for country:', countryId);
+        console.log('Available cities data:', countryCityMap[countryId]);
+        
         citySelect.innerHTML = '<option value="">Please select</option>';
-        Object.entries(cities).forEach(([id, name]) => {
-            const option = document.createElement('option');
-            option.value = id;
-            option.textContent = name;
-            citySelect.appendChild(option);
-        });
+        
+        if (countryId && countryCityMap[countryId]) {
+            console.log('Cities found:', countryCityMap[countryId]);
+            const cities = countryCityMap[countryId];
+            for (const [id, name] of Object.entries(cities)) {
+                console.log('Adding city:', id, name);
+                const option = new Option(name, id);
+                option.selected = (oldCityId == id);
+                citySelect.add(option);
+            }
+        } else {
+            console.log('No cities found for country ID:', countryId);
+        }
+    }
+    // Load cities for initial country
+    if (countrySelect.value) {
+        onsole.log('Cities for this country:', countryCityMap[countrySelect.value]);
+        loadCities(countrySelect.value);
+    }
+
+    countrySelect.addEventListener('change', function() {
+        console.log('Country changed to:', this.value);
+        loadCities(this.value);
+    });
+    const phoneInput = document.querySelector("#phone");
+const phoneError = document.querySelector("#phoneError");
+let iti;
+
+if (phoneInput) {
+    iti = window.intlTelInput(phoneInput, {
+        initialCountry: "pk",
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
     });
 
-    // Phone input formatting
-    const phoneInput = document.querySelector("#phone");
-    if (phoneInput) {
-        window.intlTelInput(phoneInput, {
-            initialCountry: "pk",
-            separateDialCode: true,
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-        });
-    }
+    phoneInput.addEventListener('input', function () {
+        if (iti.isValidNumber() && iti.getSelectedCountryData().iso2 === "pk") {
+            phoneError.classList.add('d-none');
+        } else {
+            phoneError.classList.remove('d-none');
+        }
+    });
+
+    // Optional: Validate again on form submit
+    document.querySelector('.profile-form').addEventListener('submit', function (e) {
+        if (!iti.isValidNumber() || iti.getSelectedCountryData().iso2 !== "pk") {
+            phoneError.classList.remove('d-none');
+            e.preventDefault(); // prevent submission
+        }
+    });
+}
 });
 </script>
 @endpush

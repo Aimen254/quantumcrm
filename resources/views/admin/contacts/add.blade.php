@@ -35,53 +35,61 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <input type="file" name="photo" class="d-non" id="formProfileImageInput">
+                        <input type="file" name="photo" class="d-none" id="formProfileImageInput">
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">First Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required>
-                            @error('first_name')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Last Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required>
-                            @error('last_name')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Specialty</label>
-                            <input type="text" class="form-control" name="specialty" value="{{ old('specialty') }}">
-                            @error('specialty')<small class="text-danger">{{ $message }}</small>@enderror
-                        </div>
-                        <div class="col-sm-6 m-b30">
-                            <label class="form-label">Gender</label>
-                            <select class="default-select form-control" name="gender">
+                            <label class="form-label">Gender <span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="gender" required>
                                 <option value="">Please select</option>
                                 <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                                 <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                                 <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
-                            @error('gender')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Birth</label>
+                            <label class="form-label">Birth<span class="text-danger">*</span></label>
                             <div class="input-hasicon mb-xl-0 mb-3">
-                                <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth') }}">
+                                <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth') }}" required>
                                 <div class="icon"><i class="far fa-calendar"></i></div>
                             </div>
-                            @error('birth')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label d-block">Phone <span class="text-danger">*</span></label>
                             <input type="tel" id="phone" class="form-control" name="phone" value="{{ old('phone') }}">
-                            @error('phone')<small class="text-danger">{{ $message }}</small>@enderror
+                            <small id="phoneError" class="text-danger d-none">Please enter a valid Pakistani phone number.</small>
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                            @error('email')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Country</label>
-                            <select class="default-select form-control" name="country_id" id="countrySelect">
+                            <label class="form-label">Country<span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="country_id" id="countrySelect" requireds>
                                 <option value="">Select country</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country->id }}" {{ old('country_id', $country->name == 'Pakistan' ? $country->id : '') == $country->id ? 'selected' : '' }}>
@@ -89,14 +97,18 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @error('country_id')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">City</label>
-                            <select class="default-select form-control" name="city_id" id="citySelect">
+                            <label class="form-label">City<span class="text-danger">*</span></label>
+                            <select class="default-select form-control" name="city_id" id="citySelect" required>
                                 <option value="">Please select</option>
                             </select>
-                            @error('city_id')<small class="text-danger">{{ $message }}</small>@enderror
+                            @if($errors->has('error'))
+                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -168,15 +180,34 @@ document.addEventListener('DOMContentLoaded', function () {
         loadCities(this.value);
     });
 
-    // intl-tel-input init
     const phoneInput = document.querySelector("#phone");
-    if (phoneInput) {
-        window.intlTelInput(phoneInput, {
-            initialCountry: "pk",
-            separateDialCode: true,
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-        });
-    }
+const phoneError = document.querySelector("#phoneError");
+let iti;
+
+if (phoneInput) {
+    iti = window.intlTelInput(phoneInput, {
+        initialCountry: "pk",
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+    });
+
+    phoneInput.addEventListener('input', function () {
+        if (iti.isValidNumber() && iti.getSelectedCountryData().iso2 === "pk") {
+            phoneError.classList.add('d-none');
+        } else {
+            phoneError.classList.remove('d-none');
+        }
+    });
+
+    // Optional: Validate again on form submit
+    document.querySelector('.profile-form').addEventListener('submit', function (e) {
+        if (!iti.isValidNumber() || iti.getSelectedCountryData().iso2 !== "pk") {
+            phoneError.classList.remove('d-none');
+            e.preventDefault(); // prevent submission
+        }
+    });
+}
+
 });
 </script>
 @endpush
