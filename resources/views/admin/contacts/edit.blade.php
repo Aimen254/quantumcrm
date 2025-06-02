@@ -42,14 +42,16 @@
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">First Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="first_name" value="{{ old('first_name', $user->contact->first_name) }}" required>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('first_name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Last Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="last_name" value="{{ old('last_name', $user->contact->last_name) }}" required>
-                            @error('last_name')<small class="text-danger">{{ $message }}</small>@enderror
+                            @error('last_name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Gender<span class="text-danger">*</span></label>
@@ -59,9 +61,9 @@
                                 <option value="Female" {{ old('gender', $user->contact->gender) == 'Female' ? 'selected' : '' }}>Female</option>
                                 <option value="Other" {{ old('gender', $user->contact->gender) == 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('gender')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Birth<span class="text-danger">*</span></label>
@@ -69,24 +71,24 @@
                                 <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth', $user->contact->birth) }}" required>
                                 <div class="icon"><i class="far fa-calendar"></i></div>
                             </div>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('birth')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label d-block">Phone <span class="text-danger">*</span></label>
                             <input type="tel" id="phone" class="form-control" name="phone" value="{{ old('phone', $user->contact->phone) }}" required>
                             <small id="phoneError" class="text-danger d-none">Please enter a valid Pakistani phone number.</small>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('phone')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}" required>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         @php
                         $selectedCountry = old('country_id', $user->contact->country);
@@ -104,9 +106,9 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('country_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-sm-6 m-b30">
@@ -119,9 +121,9 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('city_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                     </div>

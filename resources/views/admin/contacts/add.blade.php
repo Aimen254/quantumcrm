@@ -39,16 +39,16 @@
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">First Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('first_name')
+                                 <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Last Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('last_name')
+                                 <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Gender <span class="text-danger">*</span></label>
@@ -58,9 +58,9 @@
                                 <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                                 <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                           @error('gender')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Birth<span class="text-danger">*</span></label>
@@ -68,28 +68,28 @@
                                 <input class="form-control bt-datepicker" type="date" name="birth" value="{{ old('birth') }}" required>
                                 <div class="icon"><i class="far fa-calendar"></i></div>
                             </div>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('birth')
+                                  <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label d-block">Phone <span class="text-danger">*</span></label>
                             <input type="tel" id="phone" class="form-control" name="phone" value="{{ old('phone') }}">
                             <small id="phoneError" class="text-danger d-none">Please enter a valid Pakistani phone number.</small>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('phone')
+                                 <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('email')
+                                 <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Country<span class="text-danger">*</span></label>
-                            <select class="default-select form-control" name="country_id" id="countrySelect" requireds>
+                            <select class="default-select form-control" name="country_id" id="countrySelect" required>
                                 <option value="">Select country</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country->id }}" {{ old('country_id', $country->name == 'Pakistan' ? $country->id : '') == $country->id ? 'selected' : '' }}>
@@ -97,18 +97,18 @@
                                 </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                            @error('country_id')
+                                  <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">City<span class="text-danger">*</span></label>
                             <select class="default-select form-control" name="city_id" id="citySelect" required>
                                 <option value="">Please select</option>
                             </select>
-                            @if($errors->has('error'))
-                                <div class="alert alert-danger">{{ $errors->first('error') }}</div>
-                            @endif
+                             @error('city_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
