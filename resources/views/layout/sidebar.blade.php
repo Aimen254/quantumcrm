@@ -4,7 +4,7 @@
 	<div class="deznav">
 	    <div class="deznav-scroll">
 	        <ul class="metismenu" id="menu">
-	            <li class="menu-title">Quantum CRM</li>
+	            <li class="menu-title">Quanta CRM</li>
 	            <li>
 					<a href="{{route('dashboard')}}" aria-expanded="false">
 	                    <div class="menu-icon">
@@ -82,7 +82,7 @@
 	            </li>
 	        </ul>
 	        <div class="copyright">
-	            <p>Quantum CRM © <span class="current-year">2025</span> All Rights Reserved
+	            <p>Quanta CRM © <span class="current-year">2025</span> All Rights Reserved
 	            </p>
 	            <p>Made with <span class="heart"></span> by Our Team</p>
 	        </div>

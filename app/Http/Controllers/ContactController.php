@@ -32,64 +32,64 @@ class ContactController extends Controller
         return view('admin.contacts.add',$data);
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $validated = $request->validate([
-                'first_name' => 'required|string',
-                'last_name' => 'required|string',
-                'gender' => 'required|in:Male,Female,Other', // make required
-                'birth' => 'required|date', // make required
-                'phone' => 'required|string', // make required
-                'email' => 'required|email|unique:users,email',
-                'country_id' => 'required|exists:countries,id',
-                'city_id' => 'required|exists:cities,id',
-                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);            
-    
-            DB::beginTransaction();
-    
-            $photoPath = null;
-            if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('photos', 'public');
-            }else{
-                $photoPath = 'photos/user.jpg';
-            }
-    
-            $user = User::create([
-                'name' => $validated['first_name'] . ' ' . $validated['last_name'],
-                'email' => $validated['email'],
-                'password' => Hash::make('defaultpassword123'),
-                'photo' => $photoPath,
-                'owner_id' => auth()->user()->id,
-            ]);
-    
-            $user->assignRole('Contact');
-    
-            Contact::create([
-                'user_id' => $user->id,
-                'first_name' => $validated['first_name'],
-                'last_name' => $validated['last_name'],
-                'specialty' => $validated['specialty'] ?? null,
-                'gender' => $validated['gender'] ?? null,
-                'birth' => $validated['birth'] ?? null,
-                'phone' => $validated['phone'] ?? null,
-                'country_id' => $validated['country_id'],
-                'city_id' => $validated['city_id'],
-            ]);
-    
-            DB::commit();
-    
-            return redirect()->route('contacts.index')->with('success', 'Contact added');
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            Log::error('Contact creation failed', [
-                'message' => $e->getMessage(),
-                'e' => $e,
-            ]);
-            return back()->withErrors(['error' => 'Something went wrong. Please try again.']);
+   public function store(Request $request)
+{
+    $validated = $request->validate([
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'gender' => 'required|in:Male,Female,Other',
+        'birth' => 'required|date',
+        'phone' => 'required|string',
+        'email' => 'required|email|unique:users,email',
+        'country_id' => 'required|exists:countries,id',
+        'city_id' => 'required|exists:cities,id',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    DB::beginTransaction();
+    try {
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
+        } else {
+            $photoPath = 'photos/user.jpg';
         }
+
+        $user = User::create([
+            'name' => $validated['first_name'] . ' ' . $validated['last_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make('defaultpassword123'),
+            'photo' => $photoPath,
+            'owner_id' => auth()->user()->id,
+        ]);
+
+        $user->assignRole('Contact');
+
+        Contact::create([
+            'user_id' => $user->id,
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'specialty' => $validated['specialty'] ?? null,
+            'gender' => $validated['gender'],
+            'birth' => $validated['birth'],
+            'phone' => $validated['phone'],
+            'country_id' => $validated['country_id'],
+            'city_id' => $validated['city_id'],
+        ]);
+
+        DB::commit();
+
+        return redirect()->route('contacts.index')->with('success', 'Contact added');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Contact creation failed', [
+            'message' => $e->getMessage(),
+            'exception' => $e,
+        ]);
+        return back()->withInput()->withErrors(['error' => 'Something went wrong. Please try again.']);
     }
+}
+
 
     public function edit($id)
     {

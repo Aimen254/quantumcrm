@@ -23,7 +23,7 @@
 <header class="bg-primary text-white py-4 shadow">
     <div class="container-fluid px-5">
         <div class="d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0 text-white">Quantum CRM</h1>
+            <h1 class="h3 mb-0 text-white">Quanta CRM</h1>
             <nav>
                 <ul class="nav">
                     <li class="nav-item"><a href="#home" class="nav-link text-white">Home</a></li>
@@ -40,7 +40,7 @@
     <div class="container-fluid px-5">
         <div class="row align-items-center">
             <div class="col-md-6 animate__animated animate__fadeInLeft">
-                <h2 class="mb-3">Empower Your Growth with a Personal CRM<span class="text-primary"> Quantum CRM</span></h2>
+                <h2 class="mb-3">Empower Your Growth with a Personal CRM<span class="text-primary"> Quanta CRM</span></h2>
                 <p class="mb-4">A sleek, one-page platform where users can explore plans, register, and seamlessly manage their own CRM dashboard — built for freelancers, creators, and small businesses.</p>
                 <a href="#pricing" class="btn btn-primary shadow">See Pricing</a>
             </div>

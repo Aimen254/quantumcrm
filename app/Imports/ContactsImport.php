@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Contact;
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,7 @@ class ContactsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         Log::info('Importing row:', $row);
+        $plan = Plan::where('name', 'Basic')->first();
         $existingUser = User::where('email', $row['email'])->first();
         if ($existingUser) {
             $user = $existingUser;
@@ -31,7 +33,7 @@ class ContactsImport implements ToModel, WithHeadingRow
                 'email' => $row['email'],
                 'password' => Hash::make('12345678'),
                 'owner_id' => auth()->id(),
-                'plan_id' => null,
+                'plan_id' =>  $plan->id,
                 'photo' => $defaultPhotoPath,
             ]);    
             $user->assignRole('Contact');        
