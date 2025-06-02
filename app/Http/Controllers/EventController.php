@@ -58,6 +58,27 @@ class EventController extends Controller
     }
     
     
+    public function update(Request $request, $id)
+    {
+        try {
+            $event = Event::findOrFail($id);
+            
+            $start = Carbon::parse($request->input('start'))->toDateTimeString();
+            $end = $request->has('end') ? Carbon::parse($request->input('end'))->toDateTimeString() : null;
+            
+            $event->update([
+                'title' => $request->input('title'),
+                'start' => $start,
+                'end' => $end,
+                'class_name' => $request->input('class_name'),
+            ]);
+            
+            return response()->json($event);
+        } catch (\Exception $e) {
+            Log::error('Event update failed: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to update event'], 500);
+        }
+    }
 
     public function destroy($id)
     {
