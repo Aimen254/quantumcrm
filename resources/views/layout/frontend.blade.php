@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Quantum CRM</title>
+    <title>Quanta CRM</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">

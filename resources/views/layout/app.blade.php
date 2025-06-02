@@ -5,7 +5,7 @@
 <!-- Mirrored from yashadmin.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 15 Apr 2025 04:33:55 GMT -->
 <head>
 	<!--Title-->
-	<title>Quantum CRM -is a cloud-based Customer Relationship Management platform </title>
+	<title>Quanta CRM -is a cloud-based Customer Relationship Management platform </title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">
@@ -14,7 +14,7 @@
 	<meta name="robots" content="index, follow">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="keywords"
-		content="Quantum CRM, is a cloud-based Customer Relationship Management platform tailored for small
+		content="Quanta CRM, is a cloud-based Customer Relationship Management platform tailored for small
 			to medium-sized enterprises (SMEs) seeking to unify customer data, automate sales workflows,
 			and mitigate compliance risks. ">
 
@@ -24,7 +24,7 @@
 		and mitigate compliance risks. ">
 
 	<meta property="og:title"
-		content="Quantum CRM | Our Team">
+		content="Quanta CRM | Our Team">
 	<meta property="og:description"
 		content=" QuantaCRM is a cloud-based Customer Relationship Management platform tailored for small
 			to medium-sized enterprises (SMEs) seeking to unify customer data, automate sales workflows,
@@ -34,7 +34,7 @@
 	<meta name="format-detection" content="telephone=no">
 
 	<meta name="twitter:title"
-		content="Quantum CRM | Our Team">
+		content="Quanta CRM | Our Team">
 	<meta name="twitter:description"
 		content=" QuantaCRM is a cloud-based Customer Relationship Management platform tailored for small
 			to medium-sized enterprises (SMEs) seeking to unify customer data, automate sales workflows,
