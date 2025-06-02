@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/events/{id}', [EventController::class, 'destroy']);    
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::post('/categories', [CategoryController::class, 'store']);
+    Route::put('/events/{id}', [EventController::class, 'update']);
     Route::post('/contacts/import', [ContactController::class, 'import'])->name('contacts.import');
 
 });
